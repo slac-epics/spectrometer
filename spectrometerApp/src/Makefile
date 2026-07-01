@@ -6,6 +6,9 @@ include $(TOP)/configure/CONFIG
 
 USR_CXXFLAGS += -std=c++11
 
+# Use new typed rset defs (epics v7)
+USR_CXXFLAGS += -DUSE_TYPED_RSET
+
 # Set a flag if we're using an EVR, so that the driver gets EVR timestamps
 ifdef EVRCLIENT
 USR_CXXFLAGS += -DEVR_SUPPORT
