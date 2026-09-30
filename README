@@ -8,9 +8,9 @@ This module supports the following OceanOptics APIs:
 - OceanDirect (newest) - tested with SR-6
 - SeaBreezeAPI (old) - tested with STS, HR2000
 - SeaBreezeWrapper (oldest) - tested with HR2000
-
 See https://www.oceanoptics.com/software/
 
+This module also supports the Broadcom QNeo using the NioLink API.
 
 To add this module to an IOC application:
     - Add release path to configure/RELEASE
