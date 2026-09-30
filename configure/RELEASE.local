@@ -20,8 +20,8 @@
 # could match a directory name.
 # ==========================================================
 ASYN_MODULE_VERSION = R4.42-1.0.0
-EVRCLIENT_MODULE_VERSION = R1.5.2
-TIMINGAPI_MODULE_VERSION = R0.6
+EVRCLIENT_MODULE_VERSION = R1.5.4
+TIMINGAPI_MODULE_VERSION = R0.9
 
 # ==========================================================
 # Define module paths using pattern

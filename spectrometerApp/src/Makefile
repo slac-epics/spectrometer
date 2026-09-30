@@ -39,16 +39,22 @@ endif
 ifeq ($(T_A), linuxRT-x86_64)
 $(PROD_NAME)RT_DBD += base.dbd
 $(PROD_NAME)RT_DBD += asyn.dbd
+$(PROD_NAME)RT_DBD += drvAsynUSBPort.dbd
 $(PROD_NAME)RT_DBD += oceanDirectSupport.dbd
+$(PROD_NAME)RT_DBD += broadcomSupport.dbd
 else ifeq ($(T_A), rhel7-x86_64)
 $(PROD_NAME)_RHEL7_DBD += base.dbd
 $(PROD_NAME)_RHEL7_DBD += asyn.dbd
+$(PROD_NAME)_RHEL7_DBD += drvAsynUSBPort.dbd
 $(PROD_NAME)_RHEL7_DBD += seabreezeSupport.dbd
+$(PROD_NAME)_RHEL7_DBD += broadcomSupport.dbd
 else ifeq ($(T_A), rhel9-x86_64)
 $(PROD_NAME)_RHEL9_DBD += base.dbd
 $(PROD_NAME)_RHEL9_DBD += asyn.dbd
+$(PROD_NAME)_RHEL9_DBD += drvAsynUSBPort.dbd
 $(PROD_NAME)_RHEL9_DBD += seabreezeSupport.dbd
 $(PROD_NAME)_RHEL9_DBD += oceanDirectSupport.dbd
+$(PROD_NAME)_RHEL9_DBD += broadcomSupport.dbd
 endif
 
 # The following are compiled and added to the Support library
@@ -65,15 +71,21 @@ endif
 
 ifeq ($(T_A), linuxRT-x86_64)
 $(PROD_NAME)RT_SRCS += drvOceanDirect.cpp
+$(PROD_NAME)RT_SRCS += drvAsynUSBPort.c
+$(PROD_NAME)RT_SRCS += drvBroadcom.cpp
 $(PROD_NAME)RT_SRCS += spectrometerMain.cpp
 else ifeq ($(T_A), rhel7-x86_64)
 $(PROD_NAME)_SRCS += drvSeaBreezeWrapper.cpp
 $(PROD_NAME)_SRCS += drvSeaBreezeAPI.cpp
+$(PROD_NAME)_SRCS += drvAsynUSBPort.c
+$(PROD_NAME)_SRCS += drvBroadcom.cpp
 $(PROD_NAME)_SRCS += spectrometerMain.cpp
 else ifeq ($(T_A), rhel9-x86_64)
 $(PROD_NAME)_SRCS += drvSeaBreezeWrapper.cpp
 $(PROD_NAME)_SRCS += drvSeaBreezeAPI.cpp
 $(PROD_NAME)_SRCS += drvOceanDirect.cpp
+$(PROD_NAME)_SRCS += drvAsynUSBPort.c
+$(PROD_NAME)_SRCS += drvBroadcom.cpp
 $(PROD_NAME)_SRCS += spectrometerMain.cpp
 endif
 
@@ -87,7 +99,7 @@ ifdef EVRCLIENT
 $(PROD_NAME)RT_LIBS += evrSupport
 endif
 
-$(PROD_NAME)RT_SYS_LIBS_Linux += usb-0.1
+$(PROD_NAME)RT_SYS_LIBS_Linux += usb-0.1 usb-1.0
 $(PROD_NAME)RT_LIBS += $(EPICS_BASE_IOC_LIBS)
 ##### RHEL7
 else ifeq ($(T_A), rhel7-x86_64)
@@ -98,7 +110,7 @@ ifdef EVRCLIENT
 $(PROD_NAME)_LIBS += evrSupport
 endif
 
-$(PROD_NAME)_SYS_LIBS += usb
+$(PROD_NAME)_SYS_LIBS += usb usb-1.0
 $(PROD_NAME)_LIBS += $(EPICS_BASE_IOC_LIBS)
 ##### RHEL9
 else ifeq ($(T_A), rhel9-x86_64)
@@ -110,7 +122,7 @@ $(PROD_NAME)_LIBS += evrSupport
 endif
 
 $(PROD_NAME)_LIBS += seabreeze
-$(PROD_NAME)_SYS_LIBS += usb
+$(PROD_NAME)_SYS_LIBS += usb usb-1.0
 $(PROD_NAME)_SYS_LIBS += oceandirect
 $(PROD_NAME)_LIBS += $(EPICS_BASE_IOC_LIBS)
 endif

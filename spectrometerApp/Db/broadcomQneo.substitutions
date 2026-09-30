@@ -1,0 +1,30 @@
+
+file "broadcomQneo_main.template" {
+{}
+}
+
+file "broadcomQneo_gpio.template" {
+pattern
+{N}
+{0}
+{1}
+{2}
+{3}
+}
+
+file "bo_sync.template" {
+pattern
+{         ATTR,                      DESC,                       OUT,                       INP}
+{   :AdjOffset,           "Adjust offset", "$(P):ProcStepsSet.B0 PP", "$(P):ProcSteps.B0 CP MS"}
+{  :CorrNonlin,    "Correct Nonlinearity", "$(P):ProcStepsSet.B1 PP", "$(P):ProcSteps.B1 CP MS"}
+{:RemPerBadPix, "Remove perm. bad pixels", "$(P):ProcStepsSet.B2 PP", "$(P):ProcSteps.B2 CP MS"}
+{     :SubDark,           "Subtract dark", "$(P):ProcStepsSet.B3 PP", "$(P):ProcSteps.B3 CP MS"}
+{:RemTmpBadPix, "Remove temp. bad pixels", "$(P):ProcStepsSet.B4 PP", "$(P):ProcSteps.B4 CP MS"}
+{ :CompStrayLt,  "Compensate stray light", "$(P):ProcStepsSet.B5 PP", "$(P):ProcSteps.B5 CP MS"}
+{ :NormExpTime,     "Normalize exp. time", "$(P):ProcStepsSet.B6 PP", "$(P):ProcSteps.B6 CP MS"}
+{     :SensCal,        "Sensitivity cal.", "$(P):ProcStepsSet.B7 PP", "$(P):ProcSteps.B7 CP MS"}
+{ :CorrectPRNU,     "Correct photo resp.", "$(P):ProcStepsSet.B8 PP", "$(P):ProcSteps.B8 CP MS"}
+{   :AddFilter,    "Additional filtering", "$(P):ProcStepsSet.B9 PP", "$(P):ProcSteps.B9 CP MS"}
+{:ScaleTo16Bit,   "Scale to 16-bit range", "$(P):ProcStepsSet.BA PP", "$(P):ProcSteps.BA CP MS"}
+}
+

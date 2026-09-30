@@ -5,21 +5,36 @@ cd "${TOP}"
 
 epicsEnvSet("P",          "SPEC:LI10:SP01")
 epicsEnvSet("PORT",       "SP01")
-# Spectrometer number of pixels:
-epicsEnvSet("NELM",       "2048")
-# Spectrometer serial number:
-epicsEnvSet("SERIAL_NUM", "HR+D0587")
 
 dbLoadDatabase("dbd/spectrometer_RHEL9.dbd")
 spectrometer_registerRecordDeviceDriver(pdbbase)
 
-# drvSeaBreezeAPIConfigure(const char* port, const char* serialNum)
-drvSeaBreezeAPIConfigure("$(PORT)", "$(SERIAL_NUM)")
+## Seabreeze spectrometer
+## drvSeaBreezeAPIConfigure(const char* port, const char* serialNum)
+#drvSeaBreezeAPIConfigure("$(PORT)", "HR+D0587")
+
+# OceanDirect spectrometer
+#drvOceanDirectConfigure(const char* port, const char* serialNum, int numPixels)
+drvOceanDirectConfigure("$(PORT)", "HR+D0587", 2048)
+
+## Broadcom spectrometer (QNeo)
+##drvAsynUSBPortConfigure(const char *portName, int vendorID, int prodID,
+##        char *serial, int readPort, int writePort)
+#drvAsynUSBPortConfigure("USBPORT1", 0x276E, 0x020F, "379", 0x81, 0x01)
+## drvBroadcomConfigure(const char* port, const char* ioPort, int numPixels)
+#drvBroadcomConfigure("$(PORT)", "USBPORT1", 2048)
 
 #asynSetTraceMask("$(PORT)", -1, 0x11)
 asynSetTraceIOMask("$(PORT)", -1, 0x2)
 
-dbLoadRecords(db/seabreezeAPI.template, "P=$(P),PORT=$(PORT),NELM=$(NELM)")
+## Seabreeze spectrometer
+#dbLoadRecords(db/seabreezeAPI.template, "P=$(P),PORT=$(PORT),NELM=2048")
+
+dbLoadRecords(db/oceanDirect.template, "P=$(P),PORT=$(PORT),NELM=2048")
+
+# Broadcom spectrometer (QNeo)
+#dbLoadRecords(db/broadcomQneo.template, "P=$(P),PORT=$(PORT),NELM=256")
+
 dbLoadRecords("db/asynRecord.db", "P=$(P):,R=Asyn,PORT=$(PORT),ADDR=0,IMAX=0,OMAX=0")
 
 iocInit()

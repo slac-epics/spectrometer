@@ -1,0 +1,423 @@
+
+# Template file for Broadcom QNeo spectrometer driver, using the NioLink API.
+# 1-Jul-2026, M. Dunning (mdunning)
+
+record(bo, "$(P):AcquireSet") {
+    field(DESC, "Acquisition on/off")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) ACQUIRE")
+    field(ZNAM, "Stop")
+    field(ONAM, "Acquire")
+    info(asyn:READBACK, "1")
+}
+
+record(bi, "$(P):Acquire") {
+    field(DESC, "Acquisition on/off")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) ACQUIRE")
+    field(ZNAM, "Stopped")
+    field(ONAM, "Acquiring")
+    field(OSV,  "MINOR")
+    field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P):UpdateTimeSet") {
+    field(DESC, "Update time")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) UPDATE_TIME")
+    field(PREC, "3")
+    field(EGU,  "s")
+    field(PINI, "1")
+    info(asyn:READBACK, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P):UpdateTime") {
+    field(DESC, "Update time")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) UPDATE_TIME")
+    field(PREC, "3")
+    field(EGU,  "s")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P):UpdateTimeAct") {
+    field(DESC, "Update time - actual")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) UPDATE_TIME_ACT")
+    field(PREC, "3")
+    field(EGU,  "s")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P):UpdateRateAct") {
+    field(DESC, "Update rate - actual")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) UPDATE_RATE_ACT")
+    field(PREC, "1")
+    field(EGU,  "Hz")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P):HWVersion") {
+    field(DESC, "HW version")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) HW_VER")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P):FWVersion") {
+    field(DESC, "HW version")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) FW_VER")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P):DeviceID") {
+    field(DESC, "Device ID")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) ID")
+    field(SCAN, "I/O Intr")
+}
+
+record(stringin, "$(P):SerialNumber") {
+    field(DESC, "Device serial number")
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) SERIAL_NUM")
+    field(SCAN, "I/O Intr")
+}
+
+record(stringin, "$(P):Manufacturer") {
+    field(DESC, "Manufacturer")
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) MANU")
+    field(SCAN, "I/O Intr")
+}
+
+record(stringin, "$(P):Model") {
+    field(DESC, "Device model")
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) MODEL")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P):Wavelengths") {
+    field(DESC, "Wavelength array")
+    #field(DTYP, "asynFloat64ArrayIn")
+    field(DTYP, "asynFloat32ArrayIn")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) WAVELENGTHS")
+    #field(FTVL, "DOUBLE")
+    field(FTVL, "FLOAT")
+    field(NELM, "$(NELM=2048)")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P):Spectrum") {
+    field(DESC, "Spectrum array")
+    #field(DTYP, "asynFloat64ArrayIn")
+    field(DTYP, "asynFloat32ArrayIn")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) SPECTRUM")
+    #field(FTVL, "DOUBLE")
+    field(FTVL, "FLOAT")
+    field(NELM, "$(NELM=2048)")
+    field(SCAN, "I/O Intr")
+    info(autosaveFields, "TSE")
+}
+
+record(longin, "$(P):SpectrumLength") {
+    field(DESC, "Spectrum length")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) SPEC_LEN")
+    field(EGU,  "pixels")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbbi, "$(P):SpectrumStatus") {
+    field(DESC, "Spect. exposure status")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) SPEC_STATUS")
+    field(ZRVL, "0")
+    field(ZRST, "Idle")
+    field(ONVL, "1")
+    field(ONST, "WaitTrig")
+    field(ONSV, "MINOR")
+    field(TWVL, "2")
+    field(TWST, "TakingSpec")
+    field(TWSV, "MINOR")
+    field(THVL, "3")
+    field(THST, "WaitTemp")
+    field(THSV, "MINOR")
+    field(FRVL, "-1")
+    field(FRST, "NotReady")
+    field(FRSV, "MAJOR")
+    field(FVVL, "-2")
+    field(FVST, "Busy")
+    field(FVSV, "MAJOR")
+    field(SXVL, "-3")
+    field(SXST, "Error")
+    field(SXSV, "MAJOR")
+    field(SVVL, "-4")
+    field(SVST, "Closed")
+    field(SVSV, "MAJOR")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P):MinIntTime") {
+    field(DESC, "Min integration time")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) MIN_INT_TIME")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P):IntTimeSet") {
+    field(DESC, "Integration time")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) INT_TIME")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    info(asyn:READBACK, "1")
+}
+
+record(ai, "$(P):IntTime") {
+    field(DESC, "Integration time")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) INT_TIME")
+    field(EGU,  "ms")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbbo, "$(P):TrigModeSet") {
+    field(DESC, "Trigger mode")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_MODE")
+    field(ZRVL, "0")
+    field(ZRST, "Internal")
+    field(ONVL, "1")
+    field(ONST, "External")
+    info(asyn:READBACK, "1")
+}
+
+record(mbbi, "$(P):TrigMode") {
+    field(DESC, "Trigger mode")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_MODE")
+    field(ZRVL, "0")
+    field(ZRST, "Internal")
+    field(ONVL, "1")
+    field(ONST, "External")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbbo, "$(P):TrigInputSet") {
+    field(DESC, "Trigger input")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_INP")
+    field(ZRVL, "0")
+    field(ZRST, "GPIO0")
+    field(ONVL, "1")
+    field(ONST, "GPIO1")
+    field(TWVL, "2")
+    field(TWST, "GPIO2")
+    field(THVL, "3")
+    field(THST, "GPIO3")
+    info(asyn:READBACK, "1")
+}
+
+record(mbbi, "$(P):TrigInput") {
+    field(DESC, "Trigger input")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_INP")
+    field(ZRVL, "0")
+    field(ZRST, "GPIO0")
+    field(ONVL, "1")
+    field(ONST, "GPIO1")
+    field(TWVL, "2")
+    field(TWST, "GPIO2")
+    field(THVL, "3")
+    field(THST, "GPIO3")
+    field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P):TrigEdgeSet") {
+    field(DESC, "Trig edge")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_EDGE")
+    field(ZNAM, "Falling")
+    field(ONAM, "Rising")
+    info(asyn:READBACK, "1")
+}
+
+record(bi, "$(P):TrigEdge") {
+    field(DESC, "Trig edge")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_EDGE")
+    field(ZNAM, "Falling")
+    field(ONAM, "Rising")
+    field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P):TrigConf1Set") {
+    field(DESC, "Trig conf1")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_CONF1")
+    field(ZNAM, "End of Exposure")
+    field(ONAM, "Start of Exposure")
+    info(asyn:READBACK, "1")
+}
+
+record(bi, "$(P):TrigConf1") {
+    field(DESC, "Trig conf1")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_CONF1")
+    field(ZNAM, "End of Exposure")
+    field(ONAM, "Start of Exposure")
+    field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P):TrigConf2Set") {
+    field(DESC, "Trig conf2")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_CONF2")
+    field(ZNAM, "Normal")
+    field(ONAM, "Low jitter")
+    info(asyn:READBACK, "1")
+}
+
+record(bi, "$(P):TrigConf2") {
+    field(DESC, "Trig conf2")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_CONF2")
+    field(ZNAM, "Normal")
+    field(ONAM, "Low jitter")
+    field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(P):TrigDelaySet") {
+    field(DESC, "Trig Delay")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_DELAY")
+    field(EGU,  "us")
+    info(asyn:READBACK, "1")
+}
+
+record(longin, "$(P):TrigDelay") {
+    field(DESC, "Trig Delay")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TRIG_DELAY")
+    field(EGU,  "us")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P):Temperature") {
+    field(DESC, "Temperature")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) TEMP")
+    field(PREC, "1")
+    field(EGU,  "C")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbboDirect, "$(P):ProcStepsSet") {
+    field(DESC, "Processing Steps")
+    #field(DTYP, "asynInt32")
+    field(DTYP, "asynUInt32Digital")
+    field(OUT,  "@asynMask($(PORT) $(ADDR=0),0xffffffff,$(TIMEOUT=1)) PROC_STEPS")
+    info(asyn:READBACK, "1")
+}
+
+record(mbbiDirect, "$(P):ProcSteps") {
+    field(DESC, "Processing Steps")
+    #field(DTYP, "asynInt32")
+    field(DTYP, "asynUInt32Digital")
+    field(INP,  "@asynMask($(PORT),$(ADDR=0),0xffffffff,$(TIMEOUT=1)) PROC_STEPS")
+    field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(P):NumAveSet") {
+    field(DESC, "Num scans to average")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) NUM_AVE")
+    info(asyn:READBACK, "1")
+}
+
+record(longin, "$(P):NumAve") {
+    field(DESC, "Num scans to average")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) NUM_AVE")
+    field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P):BkgSubEnable") {
+    field(DESC, "Background subtraction")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) BKG")
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+    field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(P):BkgGet") {
+    field(DESC, "Get background")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) GET_BKG")
+    field(ZNAM, "Standby")
+    field(ONAM, "Get")
+}
+
+record(bo, "$(P):BkgClear") {
+    field(DESC, "Clear background")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) CLEAR_BKG")
+    field(ZNAM, "Standby")
+    field(ONAM, "Clear")
+}
+
+record(bi, "$(P):ConnectionStatus") {
+    field(DESC, "Device connection status")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) CONN")
+    field(ZNAM, "Disconnected")
+    field(ONAM, "Connected")
+    field(ZSV,  "MAJOR")
+    field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P):Reconnect") {
+    field(DESC, "Force reconnect")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) RECONN")
+    field(ZNAM, "Standby")
+    field(ONAM, "Reconnect")
+    field(HIGH, "1.0")
+}
+
+record(bo, "$(P):Reset") {
+    field(DESC, "Device reset")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) RESET")
+    field(ZNAM, "Standby")
+    field(ONAM, "Reset")
+    field(HIGH, "1.0")
+}
+
+record(longout, "$(P):EventCode") {
+    field(DESC, "Timestamp event code")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) EVENT_CODE")
+    field(VAL,  "0")
+    field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(P):GetSpect") {
+    field(DESC, "Get spectrum")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1)) GET_SPECT")
+    field(ZNAM, "Standby")
+    field(ONAM, "Get")
+}
+
