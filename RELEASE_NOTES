@@ -5,6 +5,9 @@ RELEASE_NOTES for spectrometer module
 See README for module info
 #==============================================================
 
+R1.2.0-0.0.1  30-Sep-2026  M. Dunning (mdunning)
+    Downgrade to asyn R4.39-1.0.2 for ProfileMonitorAD (upgrade to that app in progress)
+
 R1.2.0  30-Sep-2026  M. Dunning (mdunning)
     Add driver for Broadcom QNeo, using NioLink API.
         Tested with QNeo (USB) on linuxRT (buildroot-2019.08-x86_64).
