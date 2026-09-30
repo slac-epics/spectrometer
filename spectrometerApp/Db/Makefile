@@ -14,6 +14,7 @@ include $(TOP)/configure/CONFIG
 DB += seabreezeWrapper.template
 DB += seabreezeAPI.template
 DB += oceanDirect.template
+DB += broadcomQneo.db
 
 include $(TOP)/configure/RULES
 #----------------------------------------

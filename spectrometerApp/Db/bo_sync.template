@@ -1,0 +1,42 @@
+
+# $(ATTR) ---------------------------------------
+record(bo, "$(P)$(R="")$(ATTR)Set"){
+    field(DESC, "$(DESC="Output")")
+    field(OUT,  "$(P)$(R="")$(ATTR)Write PP")
+    field(HIGH, "$(HIGH=)")
+    field(ZNAM, "$(ZNAM="Off")")
+    field(ONAM, "$(ONAM="On")")
+}
+
+record(bo, "$(P)$(R="")$(ATTR)Write"){
+    field(DTYP, "$(DTYP=)")
+    field(ASG,  "Internal")
+    field(SDIS, "$(P)$(R="")$(ATTR)Sync.PACT")
+    field(DISV, "1")
+    field(OUT,  "$(OUT)")
+    field(ZNAM, "$(ZNAM="Off")")
+    field(ONAM, "$(ONAM="On")")
+}
+
+record(bi, "$(P)$(R="")$(ATTR)"){
+    field(DESC, "$(DESC="Output") RBV")
+    field(DTYP, "$(DTYP=)")
+    field(ASG,  "Internal")
+    field(INP,  "$(INP)")
+    field(ZNAM, "$(ZNAM="Off")")
+    field(ONAM, "$(ONAM="On")")
+    field(SCAN, "$(SCAN=Passive)")
+    field(PINI, "$(PINI=0)")
+    field(FLNK, "$(P)$(R="")$(ATTR)Sync")
+}
+
+record(bo, "$(P)$(R="")$(ATTR)Sync"){
+    field(ASG,  "Internal")
+    field(ZNAM, "$(ZNAM="Off")")
+    field(ONAM, "$(ONAM="On")")
+    field(DOL,  "$(P)$(R="")$(ATTR) NPP")
+    field(OMSL, "closed_loop")
+    field(OUT,  "$(P)$(R="")$(ATTR)Set PP")
+}
+#------------------------------------------------
+
